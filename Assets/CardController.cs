@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CardController : MonoBehaviour
 {
@@ -21,6 +22,20 @@ public class CardController : MonoBehaviour
         // CardModelを作成し、データを適用
         model = new CardModel(cardID);
         view.Show(model);
+    }
+
+    public void TurnBack()
+    {
+        // "back"という名前の子オブジェクトからImageコンポーネントを取得して表示
+        var backObj = transform.Find("Back");
+        if (backObj != null)
+        {
+            var image = backObj.GetComponent<UnityEngine.UI.Image>();
+            if (image != null)
+            {
+                image.enabled = true;
+            }
+        }
     }
 
 }

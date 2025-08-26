@@ -7,21 +7,28 @@ public class CardMovement : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        // カードをドラッグし始めた時の処理
         defaultParent = transform.parent;
-        transform.SetParent(defaultParent.parent, false);
-        GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+        if (transform.parent.tag == "PlayerHand")
+        {
+            transform.SetParent(defaultParent.parent, false);
+            GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+            // ドラッグ開始時にカードを前面に
+            transform.SetAsLastSibling();
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        // ドラッグ中のカードの位置をマウスの位置に追従させる
-        transform.position = eventData.position;
+        if (defaultParent.tag == "PlayerHand")
+        {
+            transform.position = eventData.position;
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        // カードを離した時の処理
         transform.SetParent(defaultParent, false);
         GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
